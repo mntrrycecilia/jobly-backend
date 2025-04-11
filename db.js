@@ -1,11 +1,11 @@
-"use strict";
-/** Database setup for jobly. */
+const { Pool } = require("pg");
 
-const { Client } = require("pg");
-const { getDatabaseUri } = require("./config");
-
-const db = new Client(getDatabaseUri());  // ✅ pass the object directly
-
-db.connect();
+const db = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false,
+  },
+});
 
 module.exports = db;
+
